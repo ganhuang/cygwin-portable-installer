@@ -67,6 +67,9 @@ set ANSIBLE_GIT_BRANCH=stable-2.9
 :: if set to 'yes' AWS CLI (https://github.com/aws/aws-cli) will be installed automatically
 set INSTALL_AWS_CLI=yes
 
+:: if set to 'yes' Azure CLI (https://pypi.org/project/azure-cli/) will be installed automatically
+set INSTALL_AZURE_CLI=yes
+
 :: if set to 'yes' testssl.sh (https://testssl.sh/) will be installed automatically
 set INSTALL_TESTSSL_SH=yes
 :: name of the GIT branch to install from, see https://github.com/drwetter/testssl.sh/
@@ -357,6 +360,22 @@ echo Creating [%Init_sh%]...
         echo     python3 -m ensurepip --default-pip
         echo     pip3 install --upgrade pip
         echo     pip3 install --upgrade awscli
+        echo fi
+        echo.
+    )
+    if "%INSTALL_AZURE_CLI%" == "yes" (
+        echo.
+        echo #
+        echo # Installing Azure CLI if not yet installed
+        echo #
+        echo if ! hash az 2^>/dev/null; then
+        echo     echo "*******************************************************************************"
+        echo     echo "* Installing [Azure CLI]..."
+        echo     echo "*******************************************************************************"
+        echo     export PYTHONHOME=/usr
+        echo     python3 -m ensurepip --default-pip
+        echo     pip3 install --upgrade pip
+        echo     pip3 install --upgrade azure-cli
         echo fi
         echo.
     )
